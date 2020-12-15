@@ -1,5 +1,56 @@
+body{
+    background-image: url('../img/bg.jpg');
+    background-size: 100vw 100vh;
+}
 /* selecteur pour tous les h1 */
 h1{
     color:tomato;
     font-weight: 900;
+}
+/* selecteur de l'id formulaire  */
+#formulaire{
+    /* 
+    déclinaison de border en propriété specifique
+    border-width:1px;
+    border-style: solid;
+    border-color: black; */
+    border:1px solid black;
+    border-radius: 7px;
+    /*
+    déclinaison du radius sur un seul coin
+    border-top-left-radius:25px ; */
+}
+/* selection d'un postit */
+.postit{
+    background-color: rgba(241, 232, 150, 0.822);
+    border-bottom-right-radius: 25px ;
+    width:20%;
+    min-width:300px;
+    display: inline-block;
+    padding:10px;
+    margin-left:15px;
+    border:1px solid darkgray;
+    box-shadow: 15px 15px 25px grey;
+    text-align: center;
+}
+.postit-titre{
+    font-size: 40pt;
+    font-weight:700 ;
+    text-decoration: underline tomato;
+    margin-bottom: 8px;
+}
+/* selection des .datetime uniquement dans un .postit */
+.postit .datetime{
+    font-weight: 900;
+    font-size: x-large;
+}
+@media print{
+    body{
+        background-image: none;
+        background-color: cadetblue;
+        color:tomato;
+    }
+    body{
+        color:blue;
+    }
 }
