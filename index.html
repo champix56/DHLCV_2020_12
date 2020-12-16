@@ -14,23 +14,34 @@
         }
     </style>
     -->
-    <link rel="stylesheet" href="css/style.css"/>
+    <link rel="stylesheet" href="css/style.css" />
 </head>
 
 <body>
     <div id="main">
         <div id="editor">
             <div id="formulaire">
-                <!--
+                <form name="editor-form">
+                    <!--
                     pas tres bonne pratique 
                     
                     <h1 style="color:skyblue;text-decoration: underline tomato;">Titre de la note :</h1> 
-                -->
-                <h1 >Titre de la note :</h1>
-                Mon titre de note
-                date : 2020-01-01 heure : 12:00:00
-                <h2>Description :</h2>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis accusantium placeat nostrum dignissimos. Esse eveniet soluta assumenda earum aut officia illum tempora sint. Dolorum unde labore asperiores dolorem maiores debitis?
+                    -->
+                    <h1>Titre de la note :</h1>
+                    <input type="text" name="title" id="editor-title" placeholder="saisissez le titre"/><br/>
+                    
+                    <div style="display: inline-block;">
+                            <h4>date :</h4><input type="date" name="date" id="editor-date"/>
+                    </div>
+                    <div style="display: inline-block;">
+                        <h4>heure :</h4><input type="time" name="time" id="editor-time"/>
+                    </div>
+                    <h2>Description :</h2>
+                    <textarea name="decription" id="editor-description" placeholder="saisissez la description"></textarea>
+                    <div style="text-align: center;">
+                        <input type="reset" value="Reinit."/> <input type="submit" value="valider"/>
+                    </div>
+                </form>
             </div>
         </div>
         <hr />
@@ -39,13 +50,17 @@
                 <div class="postit-titre">Mon titre de note</div>
                 date : <span class="datetime">2020-01-01</span> heure : <span class="datetime">12:00:00</span>
                 <h2>Description :</h2>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis accusantium placeat nostrum dignissimos. Esse eveniet soluta assumenda earum aut officia illum tempora sint. Dolorum unde labore asperiores dolorem maiores debitis?
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis accusantium placeat nostrum
+                dignissimos. Esse eveniet soluta assumenda earum aut officia illum tempora sint. Dolorum unde labore
+                asperiores dolorem maiores debitis?
             </div>
             <div class="postit">
                 <div class="postit-titre">Mon titre de note</div>
                 date : 2020-01-01 heure : 12:00:00
                 <h2>Description :</h2>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis accusantium placeat nostrum dignissimos. Esse eveniet soluta assumenda earum aut officia illum tempora sint. Dolorum unde labore asperiores dolorem maiores debitis?
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Facilis accusantium placeat nostrum
+                dignissimos. Esse eveniet soluta assumenda earum aut officia illum tempora sint. Dolorum unde labore
+                asperiores dolorem maiores debitis?
             </div>
         </div>
     </div>
