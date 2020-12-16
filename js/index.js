@@ -9,3 +9,20 @@ function initialisationJS(prenom) {
 }
 //usage d'une fonction
 initialisationJS('Alexandre');
+
+function formSubmited(evt) {
+    evt.preventDefault();
+    console.log('Mon formulaire est "submit" ');
+    // console.log(evt);
+    console.log(evt.target[0].value);
+    console.log(evt.target[1].value);
+    console.log(evt.target[2].value);
+    console.log(evt.target[3].value);
+    //autre method
+    console.log(document.querySelector('#editor-title'));
+
+}
+//accrochage d'un ecouteur d'event sur une balise 
+//event : submit
+//fonction à declencher pour l'event -> formSubmited
+document.querySelector('form').addEventListener('submit',formSubmited);
