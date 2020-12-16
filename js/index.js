@@ -31,3 +31,19 @@ function formSubmited(evt) {
     //autre method
     console.log(document.querySelector('#editor-title'));
 }
+
+function createPostit(params) {
+    var postit=document.createElement('div');
+    // postit.setAttribute('class','postit');
+    //postit.className='postit';
+    //ajout d'une class dans la liste de class d'un element
+    postit.classList.add('postit');
+    //possibilité de suppression d'une class d'une balise
+    //postit.classList.remove('postit');
+    //postit.innerHTML='Mon nouveau postit';
+
+    //selection de la liste de postit
+    var liste=document.querySelector('#list');
+    //ajout dans la liste de l'element
+    liste.append(postit);
+}
