@@ -1,0 +1,1 @@
+alert('Le fichier est bien en place');
