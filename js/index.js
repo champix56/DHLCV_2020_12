@@ -31,8 +31,14 @@ function formSubmited(evt) {
     //autre method
     console.log(document.querySelector('#editor-title'));
 }
-
-function createPostit(params) {
+/**
+ * Fonction de création d'un postit avec ajout dans la balise div#list
+ * @param {String} titre titre de la note
+ * @param {String} date date ISO AAAA-MM-JJ pour la note
+ * @param {String} heure heure ISO HH:MM:SS pour la note
+ * @param {String} description description de la note
+ */
+function createPostit(titre,date,heure,description) {
     var postit=document.createElement('div');
     // postit.setAttribute('class','postit');
     //postit.className='postit';
@@ -40,8 +46,11 @@ function createPostit(params) {
     postit.classList.add('postit');
     //possibilité de suppression d'une class d'une balise
     //postit.classList.remove('postit');
-    //postit.innerHTML='Mon nouveau postit';
-
+    //-----------------------------------
+    //creation du contenu par interpretation de la chaine et constitution d'un DOM pour cette balise
+    postit.innerHTML='<div class="postit-titre">'+titre+'</div>\
+    date : <span class="datetime">'+date+'</span> heure : <span class="datetime">'+heure+'</span>\
+    <h2>Description :</h2>'+description;
     //selection de la liste de postit
     var liste=document.querySelector('#list');
     //ajout dans la liste de l'element
