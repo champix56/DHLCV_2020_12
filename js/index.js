@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 //chargement du DOM est bien achevé
 addEventListener('load', function (evt) {
     console.log(evt)
@@ -25,11 +27,20 @@ function formSubmited(evt) {
     console.log('Mon formulaire est "submit" ');
     // console.log(evt);
     console.log(evt.target[0].value);
-    console.log(evt.target[1].value);
+    console.log(evt.target['date'].value);
     console.log(evt.target[2].value);
     console.log(evt.target[3].value);
     //autre method
-    console.log(document.querySelector('#editor-title'));
+    //console.log(document.querySelector('form'));
+    var monFormulaire=document.forms['editor-form'];
+    var dateFormated=moment(monFormulaire['date'].value,'DD MM YYYY')
+
+    createPostit(   
+                    monFormulaire['title'].value, 
+                    dateFormated, 
+                    monFormulaire['time'].value,
+                    monFormulaire['description'].value
+                );
 }
 /**
  * Fonction de création d'un postit avec ajout dans la balise div#list
