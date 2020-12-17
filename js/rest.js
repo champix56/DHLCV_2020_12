@@ -7,11 +7,17 @@ var BASE_URL = 'http://localhost:5629';
  * @param {Url} baseurl base de l'url des ressources
  */
 var Crud = function (baseurl) {
+    //zone d'exposition des fonctions en public
+    //pour access depuis l'exterieur de l'instance
+    this.recuperer=get;
+    this.creer=post;
+    this.mettreAJour=put;
+    this.supprimer=remove;
     /**
      * Permet l'appel HTTP avec XMLHttpRequest
      * @param {Uri} ressourceUrl chemin de la ressource
      */
-    function get(ressourceUrl) {
+    function get(ressourceUrl,clbk) {
         //instanciation de XHR
         var xhr = new XMLHttpRequest();
         //ouverture de la connexion
@@ -22,6 +28,7 @@ var Crud = function (baseurl) {
             if (evt.currentTarget.readyState < XMLHttpRequest.DONE) { return; }
             var objt = JSON.parse(evt.currentTarget.response);
             console.log(objt);
+            clbk(objt);
         }
         //envoie de la requete
         xhr.send();
@@ -77,7 +84,6 @@ var Crud = function (baseurl) {
         //tranformation en JSON du contenu Objet
         xhr.send(JSON.stringify(ressource));
     }
-
 }
 
 

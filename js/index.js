@@ -1,13 +1,30 @@
 //chargement du DOM est bien achevé
 addEventListener('load', function (evt) {
-    console.log(evt)
+   // console.log(evt)
     //usage d'une fonction
     initialisationJS('Alexandre');
     //accrochage d'un ecouteur d'event sur une balise 
     //event : submit
     //fonction à declencher pour l'event -> formSubmited
     document.querySelector('form').addEventListener('submit', formSubmited);
+    //chargement initial des postit
+    (new Crud(BASE_URL)).recuperer('/postit',function(mesPostIts){
+        console.log('j\'ai fini de recevoir mes postit voici la liste :',mesPostIts);
+        //boucle for classique de parcours
+        // for(var i=0;i<mesPostIts.length;i++){
+        //     mesPostIts[i]
+        // }
+        // ---------------
+        //for(var postit in mesPostIts){
+        //     console.log(postit);
+        // }
+        mesPostIts.forEach(function(postit) {
+            console.log(postit);
+            createPostit(postit.titre,postit.datetime.substring(0,10),postit.datetime.substring(12),postit.description);
+        });
+    });
 });
+
 
 //declaration d'une fonction
 function initialisationJS(prenom) {
