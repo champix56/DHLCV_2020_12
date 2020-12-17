@@ -1,5 +1,11 @@
+/**
+ * Constante de base d'url de l'appli
+ */
 var BASE_URL = 'http://localhost:5629';
-
+/**
+ * Objet permettant les appels http
+ * @param {Url} baseurl base de l'url des ressources
+ */
 var Crud = function (baseurl) {
     /**
      * Permet l'appel HTTP avec XMLHttpRequest
