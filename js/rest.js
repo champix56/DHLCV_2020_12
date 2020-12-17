@@ -54,14 +54,16 @@ var Crud = function (baseurl) {
     }
     /**
      * suppression d'une ressource sur ressourceUrl
-     * @param {Uri} ressourceUrl 
+     * @param {Uri} ressourceUrl addresse de la ressource
+     * @param {Function} clbk fonction à executer à la fin de la suppression
      */
-    function remove(ressourceUrl) {
+    function remove(ressourceUrl, clbk) {
         var xhr = new XMLHttpRequest();
         xhr.open('DELETE', baseurl + ressourceUrl);
         xhr.onreadystatechange = function (evt) {
-            if (xhr.readyState < 4) { return; }
-            console.log(JSON.parse(xhr.response));
+            if (xhr.readyState < 4 || xhr.status != 200 ) { return; }
+            //console.log(JSON.parse(xhr.response));
+            clbk();
         };
         xhr.send();
     }
