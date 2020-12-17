@@ -37,3 +37,16 @@ function post(ressourceUrl, ressource){
     //tranformation en JSON du contenu Objet
     xhr.send(JSON.stringify(ressource));
 }
+/**
+ * suppression d'une ressource sur ressourceUrl
+ * @param {Uri} ressourceUrl 
+ */
+function remove(ressourceUrl){
+    var xhr=new XMLHttpRequest();
+    xhr.open('DELETE',BASE_URL+ressourceUrl);
+    xhr.onreadystatechange=function (evt) {
+        if(xhr.readyState<4){return;}
+        console.log(JSON.parse(xhr.response));
+    }
+    xhr.send();
+}
