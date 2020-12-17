@@ -1,5 +1,3 @@
-const moment = require("moment");
-
 //chargement du DOM est bien achevé
 addEventListener('load', function (evt) {
     console.log(evt)
@@ -33,11 +31,12 @@ function formSubmited(evt) {
     //autre method
     //console.log(document.querySelector('form'));
     var monFormulaire=document.forms['editor-form'];
-    var dateFormated=moment(monFormulaire['date'].value,'DD MM YYYY')
+    //usage de moment js 
+    //var dateFormated=moment(monFormulaire['date'].value,'DD MM YYYY')
 
     createPostit(   
                     monFormulaire['title'].value, 
-                    dateFormated, 
+                    monFormulaire['date'].value, 
                     monFormulaire['time'].value,
                     monFormulaire['description'].value
                 );
@@ -59,11 +58,19 @@ function createPostit(titre,date,heure,description) {
     //postit.classList.remove('postit');
     //-----------------------------------
     //creation du contenu par interpretation de la chaine et constitution d'un DOM pour cette balise
-    postit.innerHTML='<div class="postit-titre">'+titre+'</div>\
+    postit.innerHTML='<div class="close"><img src="img/close.png"/></div><div class="postit-titre">'+titre+'</div>\
     date : <span class="datetime">'+date+'</span> heure : <span class="datetime">'+heure+'</span>\
     <h2>Description :</h2>'+description;
+    
+    //selection a partir de postit de ".close img" , puis addEventListener('click',deletePostit)
+    postit.querySelector('.close img').addEventListener('click',deletePostit);
+
     //selection de la liste de postit
     var liste=document.querySelector('#list');
     //ajout dans la liste de l'element
     liste.append(postit);
+}
+function deletePostit(evt) {
+    console.log('evenement lié à la suppression d\'une note',evt);
+    evt.currentTarget.parentElement.parentElement.remove(); 
 }
