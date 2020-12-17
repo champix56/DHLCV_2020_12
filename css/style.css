@@ -54,6 +54,16 @@ h1{
     font-weight: 900;
     font-size: x-large;
 }
+#list>*{
+    vertical-align: top;
+}
+.close{
+    float: right;
+}
+.close img{
+    width: 32px; 
+    height: 32px;
+}
 @media print{
     body{
         background-image: none;
