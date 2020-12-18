@@ -105,14 +105,14 @@ function createPostitByObject(postitInput) {
     //postit.className='postit';
     //ajout d'une class dans la liste de class d'un element
     postit.classList.add('postit');
-    postit.addEventListener('click',putinformclickedpostit);
+    postit.addEventListener('dblclick',putinformclickedpostit);
     //possibilité de suppression d'une class d'une balise
     //postit.classList.remove('postit');
     //-----------------------------------
     //creation du contenu par interpretation de la chaine et constitution d'un DOM pour cette balise
     postit.innerHTML='<div class="close"><img src="img/close.png"/></div><div class="postit-titre">'+postitInput.titre+'</div>\
-    date : <span class="datetime">'+postitInput.datetime.substring(0,10)+'</span> heure : <span class="datetime">'+postitInput.datetime.substring(11)+'</span>\
-    <h2>Description :</h2>'+postitInput.description;
+    date : <span class="datetime postit-date">'+postitInput.datetime.substring(0,10)+'</span> heure : <span class="datetime postit-heure">'+postitInput.datetime.substring(11)+'</span>\
+    <h2>Description :</h2><div class="postit-description">'+postitInput.description+'</div>';
     
     //selection a partir de postit de ".close img" , puis addEventListener('click',deletePostit)
     postit.querySelector('.close img').addEventListener('click',deletePostit);
@@ -134,4 +134,17 @@ function deletePostit(evt) {
 }
 function putinformclickedpostit(evt){
     console.log('j\'ai double clicker sur un postit',evt);
+    var dompostit=evt.currentTarget;
+    console.log(
+        dompostit.id.substring(7),
+        dompostit.querySelector('.postit-titre').innerText,
+        dompostit.querySelector('.postit-date').innerText,
+        dompostit.querySelector('.postit-heure').innerText,
+        dompostit.querySelector('.postit-description').innerText
+    );
+    document.forms['editor-form']['id'].value=       dompostit.id.substring(7);
+    document.forms['editor-form']['title'].value=dompostit.querySelector('.postit-titre').innerText;
+    document.forms['editor-form']['date'].value=dompostit.querySelector('.postit-date').innerText;
+    document.forms['editor-form']['heure'].value=dompostit.querySelector('.postit-heure').innerText;
+    document.forms['editor-form']['description'].value=dompostit.querySelector('.postit-description').innerText;
 }
