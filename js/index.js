@@ -41,22 +41,27 @@ function formSubmited(evt) {
     evt.preventDefault();
     console.log('Mon formulaire est "submit" ');
     // console.log(evt);
-    console.log(evt.target[0].value);
+    /*console.log(evt.target[0].value);
     console.log(evt.target['date'].value);
     console.log(evt.target[2].value);
-    console.log(evt.target[3].value);
+    console.log(evt.target[3].value);*/
     //autre method
     //console.log(document.querySelector('form'));
     var monFormulaire=document.forms['editor-form'];
     //usage de moment js 
-    //var dateFormated=moment(monFormulaire['date'].value,'DD MM YYYY')
-
-    createPostit(   
-                    monFormulaire['title'].value, 
-                    monFormulaire['date'].value, 
-                    monFormulaire['time'].value,
-                    monFormulaire['description'].value
-                );
+    //var dateFormated=moment(monFormulaire['date'].value,'DD MM YYYY');
+    
+    //constitution de l'objet à envoyer au rest
+    var postit={
+        titre:monFormulaire["title"].value,
+        datetime:evt.target[1].value+'T'+evt.target[2].value,
+        description:evt.target[3].value
+    };
+    console.log(postit);
+    //appel rest pour l'ajout dans la liste et recup de l'id
+    (new Crud(BASE_URL)).creer('/postit',postit,function(objSaved) {
+        createPostitByObject(objSaved);
+    });
 }
 /**
  * Fonction de création d'un postit avec ajout dans la balise div#list
@@ -100,6 +105,7 @@ function createPostitByObject(postitInput) {
     //postit.className='postit';
     //ajout d'une class dans la liste de class d'un element
     postit.classList.add('postit');
+    postit.addEventListener('click',putinformclickedpostit);
     //possibilité de suppression d'une class d'une balise
     //postit.classList.remove('postit');
     //-----------------------------------
@@ -117,10 +123,15 @@ function createPostitByObject(postitInput) {
     liste.append(postit);
 }
 function deletePostit(evt) {
+    evt.stopPropagation();
+
     console.log('evenement lié à la suppression d\'une note',evt);
     var domPostitId = evt.path[2].id.substring(7);
     (new Crud(BASE_URL)).supprimer('/postit/'+domPostitId,function () {
         evt.path[2].remove(); 
     });
   
+}
+function putinformclickedpostit(evt){
+    console.log('j\'ai double clicker sur un postit',evt);
 }
