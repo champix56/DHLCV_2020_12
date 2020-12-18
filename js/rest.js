@@ -14,6 +14,22 @@ var Crud = function (baseurl) {
     this.mettreAJour=_put;
     this.supprimer=_remove;
     /**
+     * Gestion d'envoi au serveur soit put (si id present) soit post si pas d'id dans la ressource
+     * @param {uri} ressourceUrl base d'url de la ressource rest (liste de la ressource)
+     * @param {object} ressource objet de ressource a envoyer
+     * @param {function} clbk callback function
+     */
+    this.envoiRessource=function(ressourceUrl,ressource,clbk)
+    {
+        if(undefined !== ressource.id)
+        {
+            _put(ressourceUrl+'/'+ressource.id,ressource,clbk);
+        }
+        else{
+            _post(ressourceUrl,ressource,clbk);
+        }
+    }
+    /**
      * Permet l'appel HTTP avec XMLHttpRequest
      * @param {Uri} ressourceUrl chemin de la ressource
      * @param {Function} clbk function de callback
@@ -75,7 +91,7 @@ var Crud = function (baseurl) {
      * @param {Uri} ressourceUrl 
      * @param {Object} ressource 
      */
-    function _put(ressourceUrl, ressource) {
+    function _put(ressourceUrl, ressource, clbk) {
         var xhr = new XMLHttpRequest();
         xhr.open('PUT', baseurl + ressourceUrl);
         //specification du type contenu
@@ -83,8 +99,9 @@ var Crud = function (baseurl) {
         //specification de ce qui est attendu en retour
         xhr.setRequestHeader('Accept', 'application/json');
         xhr.onreadystatechange = function (evt) {
-            if (xhr.readyState < 4) { return; }
+            if (xhr.readyState < 4 || xhr.status !== 200) { return; }
             console.log(JSON.parse(xhr.response));
+            clbk(JSON.parse(xhr.response));
         };
         //tranformation en JSON du contenu Objet
         xhr.send(JSON.stringify(ressource));
