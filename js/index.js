@@ -54,12 +54,19 @@ function formSubmited(evt) {
     //constitution de l'objet à envoyer au rest
     var postit={
         titre:monFormulaire["title"].value,
-        datetime:evt.target[1].value+'T'+evt.target[2].value,
-        description:evt.target[3].value
+        datetime:monFormulaire["date"].value+'T'+monFormulaire["time"].value,
+        description:monFormulaire["description"].value
     };
+    if(monFormulaire['id'].value!==''){
+        postit.id=monFormulaire['id'].value;
+    }
     console.log(postit);
     //appel rest pour l'ajout dans la liste et recup de l'id
-    (new Crud(BASE_URL)).creer('/postit',postit,function(objSaved) {
+    (new Crud(BASE_URL)).envoiRessource('/postit',postit,function(objSaved) {
+        if(undefined !== postit.id)
+        {
+            document.querySelector('#postit-'+postit.id).remove();
+        }
         createPostitByObject(objSaved);
     });
 }
@@ -145,6 +152,6 @@ function putinformclickedpostit(evt){
     document.forms['editor-form']['id'].value=       dompostit.id.substring(7);
     document.forms['editor-form']['title'].value=dompostit.querySelector('.postit-titre').innerText;
     document.forms['editor-form']['date'].value=dompostit.querySelector('.postit-date').innerText;
-    document.forms['editor-form']['heure'].value=dompostit.querySelector('.postit-heure').innerText;
+    document.forms['editor-form']['time'].value=dompostit.querySelector('.postit-heure').innerText;
     document.forms['editor-form']['description'].value=dompostit.querySelector('.postit-description').innerText;
 }
