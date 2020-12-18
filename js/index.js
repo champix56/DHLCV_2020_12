@@ -7,6 +7,7 @@ addEventListener('load', function (evt) {
     //event : submit
     //fonction à declencher pour l'event -> formSubmited
     document.querySelector('form').addEventListener('submit', formSubmited);
+    document.querySelector('form').addEventListener('reset', formReseted);
     //chargement initial des postit
     (new Crud(BASE_URL)).recuperer('/postit',function(mesPostIts){
         console.log('j\'ai fini de recevoir mes postit voici la liste :',mesPostIts);
@@ -24,8 +25,17 @@ addEventListener('load', function (evt) {
         });
     });
 });
-
-
+//var formReseted=function(evt){ ... }
+ const formReseted=(evt)=>{
+     const form= document.forms['editor-form'];
+    for(let i=0;i < form.length;i++)
+    {
+        if(form[i].type !== 'reset' && form[i].type !== 'submit')
+        {
+            form[i].value='';
+        }
+    }
+}
 //declaration d'une fonction
 function initialisationJS(prenom) {
     //deffinition d'une variable et affectation d'un contenu
