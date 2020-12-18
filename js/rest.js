@@ -38,8 +38,9 @@ var Crud = function (baseurl) {
      * Permet l'envoi en POST d'une ressource sur ressourceUrl
      * @param {Uri} ressourceUrl chemin du post
      * @param {Object} ressource data a envoyer
+     * @param {Function} clbk fonction de callback avec injection du retour
      */
-    function _post(ressourceUrl, ressource) {
+    function _post(ressourceUrl, ressource,clbk) {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', baseurl + ressourceUrl);
         //specification du type contenu
@@ -47,8 +48,9 @@ var Crud = function (baseurl) {
         //specification de ce qui est attendu en retour
         xhr.setRequestHeader('Accept', 'application/json');
         xhr.onreadystatechange = function (evt) {
-            if (xhr.readyState < 4) { return; }
+            if (xhr.readyState < 4 || xhr.status != 201) { return; }
             console.log(JSON.parse(xhr.response));
+            clbk(JSON.parse(xhr.response));
         }
         //tranformation en JSON du contenu Objet
         xhr.send(JSON.stringify(ressource));
