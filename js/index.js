@@ -1,3 +1,5 @@
+var lastID=-1;
+var descripteurDInterval;
 //chargement du DOM est bien achevé
 addEventListener('load', function (evt) {
    // console.log(evt)
@@ -9,21 +11,8 @@ addEventListener('load', function (evt) {
     document.querySelector('form').addEventListener('submit', formSubmited);
     document.querySelector('form').addEventListener('reset', formReseted);
     //chargement initial des postit
-    (new Crud(BASE_URL)).recuperer('/postit',function(mesPostIts){
-        console.log('j\'ai fini de recevoir mes postit voici la liste :',mesPostIts);
-        //boucle for classique de parcours
-        // for(var i=0;i<mesPostIts.length;i++){
-        //     mesPostIts[i]
-        // }
-        // ---------------
-        //for(var postit in mesPostIts){
-        //     console.log(postit);
-        // }
-        mesPostIts.forEach(function(postit) {
-            console.log(postit);
-            createPostitByObject(postit);
-        });
-    });
+    pullingFunction();
+    descripteurDInterval=setInterval(pullingFunction,5000);
 });
 //var formReseted=function(evt){ ... }
  const formReseted=(evt)=>{
@@ -78,6 +67,7 @@ function formSubmited(evt) {
             document.querySelector('#postit-'+postit.id).remove();
         }
         createPostitByObject(objSaved);
+        monFormulaire.reset();
     });
 }
 /**
@@ -114,6 +104,7 @@ function createPostit(titre,date,heure,description) {
  * @param {Object} postitInput object postit instancié
  */
 function createPostitByObject(postitInput) {
+    if(lastID<postitInput.id){lastID=postitInput.id}
     var postit=document.createElement('div');
     //creation de l'id de balise en liens avec l'id du postit dans le rest
     //pour faciliter la suppression
@@ -164,4 +155,28 @@ function putinformclickedpostit(evt){
     document.forms['editor-form']['date'].value=dompostit.querySelector('.postit-date').innerText;
     document.forms['editor-form']['time'].value=dompostit.querySelector('.postit-heure').innerText;
     document.forms['editor-form']['description'].value=dompostit.querySelector('.postit-description').innerText;
+}
+/**
+ * fonction pour recuperer les notes a partir de la valeur d'un id lastId
+ */
+function getLastIdInDom(){
+    lastID=-1;
+    const listeChildren=document.querySelector('#liste').children;
+    for(domPostit in listeChildren){
+        if(lastID<parseInt(domPostit.id.substring(7)))
+        {
+            lastID=domPostit.id.substring(7);
+        }
+    }
+}
+ const pullingFunction=()=>{
+     getLastIdInDom();
+    const lastIdPlus1=lastID+1;
+    (new Crud(BASE_URL)).recuperer('/postit?id_gte='+lastIdPlus1,(listeDesPostIt)=>{
+        listeDesPostIt.map((element)=>{
+            //usage d'une ternaire     condition ? cas si c'est vrai : cas si c'est faux
+            lastID= (lastID<element.id ? element.id : lastID);
+            createPostitByObject(element);
+        });
+    });
 }
