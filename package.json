@@ -1,10 +1,12 @@
 {
-  "name": "DHLCV_2020_12",
+  "name": "dhlcv-2020-12",
   "version": "1.0.0",
   "description": "Cours DHL CV decembre",
   "main": "index.js",
   "scripts": {
-    "test": "lite-server"
+    "lite": "lite-server",
+    "json": "json-server -p 5629 db/db.json",
+    "start": "npm run lite | npm run json"
   },
   "repository": {
     "type": "git",
